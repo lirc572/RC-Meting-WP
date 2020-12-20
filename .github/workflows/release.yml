@@ -11,6 +11,9 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
+      - name: Get current date
+        id: date
+        run: echo "name=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Create Release
