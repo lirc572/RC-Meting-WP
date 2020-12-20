@@ -1,5 +1,7 @@
 # RC-Meting
 
+![release](https://github.com/lirc572/RC-Meting-WP/workflows/Create%20Release/badge.svg)
+
 A WordPress wrapper plugin for [MetingJS](https://github.com/metowolf/MetingJS).
 
 # Installation
