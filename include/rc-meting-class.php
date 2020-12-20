@@ -20,9 +20,19 @@ if (!class_exists('Rc_Meting')) {
             add_action('wp_enqueue_scripts', array($this, 'rc_meting_scripts'));
             add_shortcode('rc-meting', array($this, 'rc_meting_shortcode'));
         }
+        public function no_referer()
+        {
+            return '<script>'
+                . 'var meta = document.createElement("meta");'
+                . 'meta.name = "referrer";'
+                . 'meta.content = "no-referrer";'
+                . 'document.getElementsByTagName("head")[0].appendChild(meta);'
+                . '</script>';
+        }
         public function rc_meting_shortcode($atts)
         {
             extract(shortcode_atts(array(
+                'no_referer' => false,
                 'auto' => '',
                 'fixed' => false,
                 'mini' => false,
@@ -30,9 +40,11 @@ if (!class_exists('Rc_Meting')) {
                 'theme' => '#4C5243', // #LRC
                 'loop' => 'all',
                 'order' => 'list',
+                'list_folded' => true,
             ), $atts));
             $auto = htmlspecialchars($auto);
-            return '<p><meting-js auto="'
+            return ($no_referer ? $this->no_referer() : '')
+                . '<p><meting-js auto="'
                 . $auto
                 . '" fixed="'
                 . $fixed
@@ -46,6 +58,8 @@ if (!class_exists('Rc_Meting')) {
                 . $loop
                 . '" order="'
                 . $order
+                . '" list-folded="'
+                . $list_folded
                 . '">'
                 . '</meting-js></p>';
         }
