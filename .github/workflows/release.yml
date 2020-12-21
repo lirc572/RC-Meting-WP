@@ -11,9 +11,6 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - name: Get current date
-        id: date
-        run: echo "name=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Create Release
@@ -24,7 +21,5 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: |
-            Released on ${{ steps.date.outputs.date }}
           draft: false
           prerelease: false
