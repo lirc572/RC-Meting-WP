@@ -19,6 +19,7 @@ if (!class_exists('Rc_Meting')) {
             $this->version = $version;
             add_action('wp_enqueue_scripts', array($this, 'rc_meting_scripts'));
             add_shortcode('rc-meting', array($this, 'rc_meting_shortcode'));
+            add_action('admin_menu', array($this, 'rc_meting_options'));
         }
         public function no_referer()
         {
@@ -31,19 +32,9 @@ if (!class_exists('Rc_Meting')) {
         }
         public function rc_meting_shortcode($atts)
         {
-            extract(shortcode_atts(array(
-                'no_referer' => false,
-                'auto' => '',
-                'fixed' => false,
-                'mini' => false,
-                'autoplay' => false,
-                'theme' => '#4C5243', // #LRC
-                'loop' => 'all',
-                'order' => 'list',
-                'list_folded' => true,
-            ), $atts));
+            extract(shortcode_atts($this->get_options(), $atts));
             $auto = htmlspecialchars($auto);
-            return ($no_referer ? $this->no_referer() : '')
+            return ($no_referer === 'true' ? $this->no_referer() : '')
                 . '<p><meting-js auto="'
                 . $auto
                 . '" fixed="'
@@ -62,6 +53,63 @@ if (!class_exists('Rc_Meting')) {
                 . $list_folded
                 . '">'
                 . '</meting-js></p>';
+        }
+        public function rc_meting_options()
+        {
+            add_options_page(
+                __('RC Meting'),
+                __('RC Meting'),
+                'manage_options',
+                'rc-meting',
+                array($this, 'rc_meting_options_page'));
+        }
+        public function rc_meting_options_page()
+        {
+            require_once 'rc-meting-options.php';
+        }
+        public static function get_options()
+        {
+            return array(
+                'no_referer' => get_option('rc_meting_default_no_referer', false),
+                'auto' => get_option('rc_meting_default_auto', ''),
+                'fixed' => get_option('rc_meting_default_fixed', false),
+                'mini' => get_option('rc_meting_default_mini', false),
+                'autoplay' => get_option('rc_meting_default_autoplay', false),
+                'theme' => get_option('rc_meting_default_theme', '#4C5243'), // #LRC
+                'loop' => get_option('rc_meting_default_loop', 'all'),
+                'order' => get_option('rc_meting_default_order', 'list'),
+                'list_folded' => get_option('rc_meting_default_list_folded', true),
+            );
+        }
+        public static function update_options($options)
+        {
+            if (isset($options['no_referer'])) {
+                update_option('rc_meting_default_no_referer', $options['no_referer']);
+            }
+            if (isset($options['auto'])) {
+                update_option('rc_meting_default_auto', $options['auto']);
+            }
+            if (isset($options['fixed'])) {
+                update_option('rc_meting_default_fixed', $options['fixed']);
+            }
+            if (isset($options['mini'])) {
+                update_option('rc_meting_default_mini', $options['mini']);
+            }
+            if (isset($options['autoplay'])) {
+                update_option('rc_meting_default_autoplay', $options['autoplay']);
+            }
+            if (isset($options['theme'])) {
+                update_option('rc_meting_default_theme', $options['theme']);
+            }
+            if (isset($options['loop'])) {
+                update_option('rc_meting_default_loop', $options['loop']);
+            }
+            if (isset($options['order'])) {
+                update_option('rc_meting_default_order', $options['order']);
+            }
+            if (isset($options['list_folded'])) {
+                update_option('rc_meting_default_list_folded', $options['list_folded']);
+            }
         }
         public function rc_meting_scripts()
         {
