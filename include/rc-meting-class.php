@@ -70,15 +70,15 @@ if (!class_exists('Rc_Meting')) {
         public static function get_options()
         {
             return array(
-                'no_referer' => get_option('rc_meting_default_no_referer', false),
+                'no_referer' => get_option('rc_meting_default_no_referer', 'false'),
                 'auto' => get_option('rc_meting_default_auto', ''),
-                'fixed' => get_option('rc_meting_default_fixed', false),
-                'mini' => get_option('rc_meting_default_mini', false),
-                'autoplay' => get_option('rc_meting_default_autoplay', false),
+                'fixed' => get_option('rc_meting_default_fixed', 'false'),
+                'mini' => get_option('rc_meting_default_mini', 'false'),
+                'autoplay' => get_option('rc_meting_default_autoplay', 'false'),
                 'theme' => get_option('rc_meting_default_theme', '#4C5243'), // #LRC
                 'loop' => get_option('rc_meting_default_loop', 'all'),
                 'order' => get_option('rc_meting_default_order', 'list'),
-                'list_folded' => get_option('rc_meting_default_list_folded', true),
+                'list_folded' => get_option('rc_meting_default_list_folded', 'true'),
             );
         }
         public static function update_options($options)
