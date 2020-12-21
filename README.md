@@ -34,6 +34,6 @@ Refer to [MetingJS Options](https://github.com/metowolf/MetingJS#option) for how
 > It is noticed that if referer header is sent, sometimes Netease api will return 403.
 > However, enabling this option will affect all requests made on the web page. Hence you should only enable this option if you know what you are doing.
 
-> `autoplay` does not work due to <a href="https://github.com/DIYgod/APlayer/issues/281" target="_blank">an issue with Aplayer</a>
+> `autoplay` does not work due to [an issue with Aplayer](https://github.com/DIYgod/APlayer/issues/281)
 
 > `fixed` mode is currently not displayed correctly
