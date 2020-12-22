@@ -11,7 +11,7 @@ $option_values = Rc_Meting::get_options();
     <h1><?php _e('RC Meting Options');?></h1>
     <h3><?php echo __('Default Values') . ':'; ?></h3>
     <form method="post" action="">
-        <input type="hidden" name="meting_form_submit" value="1" />
+        <input type="hidden" name="meting_form_submit" value="true" />
         <table class="form-table" role="presentation">
             <tbody>
                 <?php
@@ -25,19 +25,27 @@ foreach ($option_values as $key => $value) {
                         <?php
 if (in_array($key, array('no_referer', 'fixed', 'mini', 'autoplay', 'list_folded'))) {
         ?>
-                        <select id="<?php echo $key; ?>" name="<?php echo $key; ?>">
+                        <!-- <select id="<?php echo $key; ?>" name="<?php echo $key; ?>">
                             <option value="true" <?php echo $value === 'true' ? 'selected="selected"' : ''; ?>>true
                             </option>
                             <option value="false" <?php echo $value === 'false' ? 'selected="selected"' : ''; ?>>false
                             </option>
-                        </select>
+                        </select> -->
+                        <fieldset>
+                            <legend class="screen-reader-text"><span><?php echo $key; ?></span></legend>
+                            <label for="<?php echo $key; ?>">
+                                <input type="hidden" name="<?php echo $key; ?>" value="false">
+                                <input name="<?php echo $key; ?>" type="checkbox" id="<?php echo $key; ?>" value="true"
+                                    <?php echo $value === 'true' ? 'checked="checked"' : ''; ?>>
+                            </label>
+                        </fieldset>
                         <?php
 if ($key === 'autoplay') {
-            echo '<label for="<?php echo $key; ?>">(autoplay does not work due to <a
+            echo '<p>(autoplay does not work due to <a
                             href="https://github.com/DIYgod/APlayer/issues/281" target="_blank">an APlayer
-                            issue</a>)</label>';
-                        }
-                        ?>
+                            issue</a>)</p>';
+        }
+        ?>
                         <?php
 } else if ($key === 'loop') {
         ?>
@@ -66,7 +74,7 @@ if ($key === 'autoplay') {
                         <?php
 } else {
         ?>
-                        <input id="<?php echo $key; ?>" name="<?php echo $key; ?>" type="text"
+                        <input id="<?php echo $key; ?>" name="<?php echo $key; ?>" type="text" class="regular-text"
                             value="<?php echo $value; ?>" />
                         <?php
 }
@@ -79,7 +87,7 @@ if ($key === 'autoplay') {
             </tbody>
         </table>
         <p class="submit">
-            <input type="submit" value="Save Changes" />
+            <input type="submit" class="button button-primary" value="Save Changes" />
         </p>
     </form>
 </div>
